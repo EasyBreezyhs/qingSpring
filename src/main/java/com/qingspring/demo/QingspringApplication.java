@@ -19,5 +19,4 @@ public class QingspringApplication {
     public static void main(String[] args) {
         SpringApplication.run(QingspringApplication.class, args);
     }
-
 }
