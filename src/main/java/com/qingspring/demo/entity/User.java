@@ -2,12 +2,16 @@ package com.qingspring.demo.entity;
 
 import lombok.Data;
 
+/**
+* @author : EasyBreezyhs
+* @date : 2022/07/02-14:26
+*/
 @Data
 public class User {
-    private int id;
-    private String userName;
+    private Integer id;
+    private String username;
     private String password;
-    private String nickName;
+    private String nickname;
     private String email;
     private String phone;
     private String address;
