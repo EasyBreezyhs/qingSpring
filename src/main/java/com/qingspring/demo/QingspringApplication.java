@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 * @date : 2022/07/02-14:29
 */
 @SpringBootApplication
-@MapperScan(basePackages = "com.qingspring.demo.mapper")
 public class QingspringApplication {
 
     public static void main(String[] args) {

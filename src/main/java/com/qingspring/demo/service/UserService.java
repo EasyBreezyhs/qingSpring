@@ -1,11 +1,18 @@
 package com.qingspring.demo.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.qingspring.demo.entity.User;
-import org.springframework.stereotype.Service;
 
+import java.util.Map;
 
-public interface UserService {
+/**
+* @author : EasyBreezyhs
+* @date : 2022/07/05-19:55
+*/
+public interface UserService extends IService<User> {
 
-    int save(User user);
+    boolean insertOrupdate(User user);
+
+//    Map<String, Object> pageUser(Integer pageNum, Integer pageSize);
 
 }
