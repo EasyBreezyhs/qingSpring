@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingspring.demo.mapper.UserMapper">
+
+<!--    <resultMap id="userResultMap" type="com.qingspring.demo.entity.User">-->
+<!--        <constructor>-->
+<!--            <idArg column="id" javaType="Integer"/>-->
+<!--            <arg column="username" javaType="String"/>-->
+<!--            <arg column="password" javaType="String"/>-->
+<!--            <arg column="nickname" javaType="String"/>-->
+<!--            <arg column="email" javaType="String"/>-->
+<!--            <arg column="phone" javaType="String"/>-->
+<!--            <arg column="address" javaType="String"/>-->
+<!--            <arg column="email" javaType="String"/>-->
+<!--            <arg column="role" javaType="String"/>-->
+<!--        </constructor>-->
+<!--    </resultMap>-->
+
+
+    <update id="update">
+        update sys_user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="role != null">
+                role = #{role},
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+<!--    <delete id="deletUserById" parameterType="java.lang.Integer">-->
+<!--        delete from sys_user where id = #{id}-->
+<!--    </delete>-->
+
+<!--    <select id="findAll" resultType="com.qingspring.demo.entity.User">-->
+<!--        select * from sys_user-->
+<!--    </select>-->
+
+<!--    <select id="findAllBypage" resultType="com.qingspring.demo.entity.User">-->
+<!--        select * from sys_user limit #{pageNum},#{pageSize}-->
+<!--    </select>-->
+
+<!--    <select id="selectTotal" resultType="java.lang.Integer">-->
+<!--        select count(id) from sys_user-->
+<!--    </select>-->
+
+
+</mapper>
