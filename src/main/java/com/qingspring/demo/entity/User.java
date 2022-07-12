@@ -1,32 +1,59 @@
 package com.qingspring.demo.entity;
 
+import cn.hutool.core.annotation.Alias;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import lombok.Data;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
-* @author : EasyBreezyhs
-* @date : 2022/07/02-14:26
-*/
-@Data
+ * <p>
+ * 
+ * </p>
+ *
+ * @author EasyBreezyhs
+ * @since 2022-07-07
+ */
+@Getter
+@Setter
 @TableName("sys_user")
-public class User {
+@ApiModel(value = "User对象", description = "")
+@ToString
 
-    @TableId(value = "id",type = IdType.AUTO)
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+    @Alias("用户姓名")
     private String username;
-    @JsonIgnore
+    @Alias("用户密码")
     private String password;
+    @Alias("昵称")
     private String nickname;
+    @Alias("邮箱")
     private String email;
+    @Alias("电话")
     private String phone;
+    @Alias("地址")
     private String address;
-    @TableField(value = "avatar_url")
-    private String avatar;
+
+    @Alias("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime createTime;
+    @Alias("头像")
+    private String avatarUrl;
+
     private String role;
+
 
 }
