@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -37,6 +38,7 @@ public class User implements Serializable {
     @Alias("用户姓名")
     private String username;
     @Alias("用户密码")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Alias("昵称")
     private String nickname;

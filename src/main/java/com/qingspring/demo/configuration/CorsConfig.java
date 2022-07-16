@@ -1,4 +1,4 @@
-package com.qingspring.demo.Configuration;
+package com.qingspring.demo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,10 +1,16 @@
 package com.qingspring.demo.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.qingspring.demo.common.ResponseEnum;
+import com.qingspring.demo.common.Result;
+import com.qingspring.demo.controller.DTO.UserDTO;
+import com.qingspring.demo.entity.Vo.UserVo;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -13,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.ResultSet;
 import java.util.List;
 
 import com.qingspring.demo.service.IUserService;
@@ -94,6 +101,31 @@ public class UserController {
         userService.saveBatch(userList);
         return true;
     }
+
+    @PostMapping("/login")
+    public Result login(@RequestBody UserDTO userDTO){
+        String username = userDTO.getUsername();
+        String password = userDTO.getPassword();
+        if (StrUtil.isBlank(username)||StrUtil.isBlank(password)){
+            return Result.error(ResponseEnum.PARAMETER_NULL,null);
+        }
+        userService.login(userDTO);
+
+        return new Result(ResponseEnum.SUCCESS,userDTO);
+    }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody UserDTO userDTO){
+        String username = userDTO.getUsername();
+        String password = userDTO.getPassword();
+        if (StrUtil.isBlank(username)||StrUtil.isBlank(password)){
+            return Result.error(ResponseEnum.PARAMETER_NULL,null);
+        }
+
+        return new Result(ResponseEnum.SUCCESS,userService.register(userDTO));
+    }
+
+
 
 
 
