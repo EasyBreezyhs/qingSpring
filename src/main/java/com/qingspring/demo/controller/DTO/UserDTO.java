@@ -25,5 +25,11 @@ public class UserDTO {
     @Alias("头像")
     private String avatarUrl;
 
+//    前端同一页面实现了登录和注册功能
+    private String reusername;
+    private String repassword;
+    private String reregpassword;
+
+
 
 }

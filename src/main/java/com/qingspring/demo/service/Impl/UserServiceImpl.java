@@ -68,11 +68,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     }
 
+    //    前端同一页面实现了登录和注册功能 需要区分 reusername 和 username 等
     @Override
     public Boolean register(UserDTO userDTO) {
-        User user = userInfo(userDTO);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",userDTO.getReusername());
+        wrapper.eq("password",userDTO.getRepassword());
+        User user;
+        try {
+            user = getOne(wrapper);
+        }catch (Exception e){
+            throw  new ServiceException(ResponseEnum.ERROR);
+        }
+
         if (user == null){
             user = new User();
+            userDTO.setUsername(userDTO.getReusername());
+            userDTO.setPassword(userDTO.getRepassword());
             BeanUtil.copyProperties(userDTO,user);
             save(user);
         }else {

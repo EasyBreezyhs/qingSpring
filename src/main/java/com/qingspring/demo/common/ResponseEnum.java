@@ -10,6 +10,7 @@ public enum ResponseEnum {
     ERROR("500","系统错误"),
 
     USER_EXISTS("331","用户已存在"),
+    REGISTER_DIFFERENT("332","两次密码不同"),
 
     USER_INFO_NULL("300","用户信息不能为空"),
     EMAIL_ERROR("301","邮箱格式错误"),
