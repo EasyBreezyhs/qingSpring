@@ -12,6 +12,7 @@ import com.qingspring.demo.exception.ServiceException;
 import com.qingspring.demo.mapper.UserMapper;
 import com.qingspring.demo.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qingspring.demo.utils.JWT.TokenUtils;
 import com.sun.xml.internal.ws.api.model.ExceptionType;
 import net.sf.jsqlparser.expression.TryCastExpression;
 import org.springframework.beans.BeanUtils;
@@ -60,6 +61,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = userInfo(userDTO);
         if (user!=null){
             BeanUtil.copyProperties(user,userDTO,true);
+            //设置token
+            String token = TokenUtils.getToken(user.getId().toString(),user.getPassword());
+            userDTO.setToken(token);
             return userDTO;
         }else{
             throw new ServiceException(ResponseEnum.USERNAME_NOT_EXISTS);

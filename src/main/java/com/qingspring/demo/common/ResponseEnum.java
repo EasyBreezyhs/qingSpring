@@ -12,10 +12,13 @@ public enum ResponseEnum {
     USER_EXISTS("331","用户已存在"),
     REGISTER_DIFFERENT("332","两次密码不同"),
 
+    TOKEN_EXISTS("333","无token,请重新登录"),
+    TOKEN_FAIL("333","token验证失败，请重新登录"),
+    TOKEN_USER_ERROE("333","用户不存在，请重新登录"),
+
     USER_INFO_NULL("300","用户信息不能为空"),
     EMAIL_ERROR("301","邮箱格式错误"),
     MOBILE_ERROR("302","手机格式错误"),
-    USERNAME_EXISTS("303","用户名已存在"),
     USER_REGISTER_ERROR("304","用户注册失败"),
     USERNAME_NOT_EXISTS("310","用户名或密码错误"),
     PASSWORD_ERROR("306","密码错误"),

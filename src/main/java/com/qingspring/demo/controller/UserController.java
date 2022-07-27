@@ -115,9 +115,9 @@ public class UserController {
         if (StrUtil.isBlank(username)||StrUtil.isBlank(password)){
             return Result.error(ResponseEnum.PARAMETER_NULL,null);
         }
-        userService.login(userDTO);
+        UserDTO dto = userService.login(userDTO);
 
-        return new Result(ResponseEnum.SUCCESS,userDTO);
+        return new Result(ResponseEnum.SUCCESS,dto);
     }
 
     @PostMapping("/register")
