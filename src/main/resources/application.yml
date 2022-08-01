@@ -12,6 +12,9 @@ spring:
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
+  servlet:
+    multipart:
+      max-file-size: 5MB
 
 mybatis-plus:
   typeAliasesPackage: com.qingspring.demo.entity
@@ -19,3 +22,12 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+files:
+  upload:
+    path: D:/Tools/Project/Image/
+
+
+#accessFile:
+#  resourceHandler: /file/** #匹配需要拦截的URL
+#  location: D:/Tools/Project/Image/  #本地文件夹

@@ -16,6 +16,10 @@ public enum ResponseEnum {
     TOKEN_FAIL("333","token验证失败，请重新登录"),
     TOKEN_USER_ERROE("333","用户不存在，请重新登录"),
 
+    UPLOAD_FAIL("334","上传失败，重新上传"),
+    FILE_EXCEED("334","文件过大，请选择不大于6mb的文件"),
+    FILE_ISPIC("334","不是所支持的图片类型，请重新上传"),
+
     USER_INFO_NULL("300","用户信息不能为空"),
     EMAIL_ERROR("301","邮箱格式错误"),
     MOBILE_ERROR("302","手机格式错误"),

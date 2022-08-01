@@ -1,5 +1,6 @@
 package com.qingspring.demo.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
@@ -8,6 +9,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qingspring.demo.common.ResponseEnum;
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.controller.DTO.UserDTO;
+import com.qingspring.demo.utils.JWT.LoginToken;
+import com.qingspring.demo.utils.JWT.TokenUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/user")
+@LoginToken
 public class UserController {
 
 
@@ -70,6 +74,16 @@ public class UserController {
         return Result.success(userService.list());
         }
 
+    //通过id查询
+    @GetMapping("/username/{username}")
+    public Result findUserByusername(@PathVariable String username){
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return Result.success(userService.getOne(queryWrapper));
+
+    }
+
      //分页
     @GetMapping("/page")
     public Result findPage(@RequestParam Integer pageNum,
@@ -89,7 +103,7 @@ public class UserController {
         if (!"".equals(address)){
             queryWrapper.like("address",address);
         }
-
+        queryWrapper.orderByDesc("id");
         return Result.success(userService.page(page,queryWrapper));
         }
 

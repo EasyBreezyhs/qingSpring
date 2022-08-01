@@ -1,9 +1,7 @@
 package com.qingspring.demo.mapper;
 
-import com.qingspring.demo.entity.User;
+import com.qingspring.demo.entity.Filesdb;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
-import java.util.List;
 
 /**
  * <p>
@@ -11,9 +9,7 @@ import java.util.List;
  * </p>
  *
  * @author EasyBreezyhs
- * @since 2022-07-07
+ * @since 2022-07-28
  */
-public interface UserMapper extends BaseMapper<User> {
-
-
+public interface FileMapper extends BaseMapper<Filesdb> {
 }

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 /**
  * <h3>qingspring</h3>
@@ -38,34 +39,56 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        //执行认证
-        if(StrUtil.isBlank(token)){
-            throw new ServiceException(ResponseEnum.TOKEN_EXISTS);
+        HandlerMethod handlerMethod=(HandlerMethod)handler;
+        Method method=handlerMethod.getMethod();
+        //检查是否有passtoken注释，有则跳过认证
+        if (method.isAnnotationPresent(PassToken.class)) {
+            PassToken passToken = method.getAnnotation(PassToken.class);
+            if (passToken.required()) {
+                return true;
+            }
         }
 
-        String userId;
-        try{
-            userId = JWT.decode(token).getAudience().get(0);
-        }catch (JWTException je){
-            throw new ServiceException(ResponseEnum.TOKEN_EXISTS);
-        }
 
-        //根据token中的userId查询数据库
-        User user = userService.getById(userId);
-        if (user == null){
-            throw new ServiceException(ResponseEnum.TOKEN_USER_ERROE);
-        }
+    if (method.isAnnotationPresent(LoginToken.class)) {
+        LoginToken userLoginToken = method.getAnnotation(LoginToken.class);
+        if (userLoginToken.required()) {
 
-        //最后进行用户密码加签验证 token
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
-        try {
-            //验证token
-            jwtVerifier.verify(token);
-        }catch (JWTException je){
-            throw new ServiceException(ResponseEnum.TOKEN_FAIL);
+            //执行认证
+            if (StrUtil.isBlank(token)) {
+                throw new ServiceException(ResponseEnum.TOKEN_EXISTS);
+            }
+
+            String userId;
+            try {
+                userId = JWT.decode(token).getAudience().get(0);
+            } catch (JWTException je) {
+                throw new ServiceException(ResponseEnum.TOKEN_EXISTS);
+            }
+
+            //根据token中的userId查询数据库
+            User user = userService.getById(userId);
+            if (user == null) {
+                throw new ServiceException(ResponseEnum.TOKEN_USER_ERROE);
+            }
+
+            //最后进行用户密码加签验证 token
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+            try {
+                //验证token
+                jwtVerifier.verify(token);
+            } catch (JWTException je) {
+                throw new ServiceException(ResponseEnum.TOKEN_FAIL);
+            }
+            return true;
         }
+    }
+
         return true;
     }
+
+
+
 
 
 }

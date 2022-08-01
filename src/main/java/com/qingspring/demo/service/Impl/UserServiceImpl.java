@@ -1,6 +1,7 @@
 package com.qingspring.demo.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -90,13 +91,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             userDTO.setUsername(userDTO.getReusername());
             userDTO.setPassword(userDTO.getRepassword());
             BeanUtil.copyProperties(userDTO,user);
+            String s = IdUtil.fastSimpleUUID();
+            String nikename = "用户"+s.substring(16,32);
+            user.setNickname(nikename);
             save(user);
         }else {
             throw new ServiceException(ResponseEnum.USER_EXISTS);
         }
         return true;
     }
-
 
     private  User userInfo(UserDTO userDTO){
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -110,6 +113,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         return user;
     }
+
+
+    //    @Override
+//    public UserDTO findUserByusername(String username) {
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.eq("username",username);
+//
+//        User one = getOne(wrapper);
+//        if (one==null){
+//            throw new ServiceException(ResponseEnum.TOKEN_USER_ERROE);
+//        }
+//        UserDTO userDTO = new UserDTO();
+//        BeanUtil.copyProperties(one,userDTO,true);
+//        return userDTO;
+//    }
+
 
 
 }

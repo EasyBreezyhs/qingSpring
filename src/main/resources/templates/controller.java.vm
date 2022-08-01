@@ -55,7 +55,7 @@ public class ${table.controllerName} {
         }
 
     //通过id删除
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/del/{id}")
     public Boolean delete(@PathVariable Integer id){
         return ${table.entityPath}Service.removeById(id);
         }
@@ -83,8 +83,8 @@ public class ${table.controllerName} {
     public Page<${entity}> findPage(@RequestParam Integer pageNum,
                                     @RequestParam Integer pageSize){
 
-        Page<User> page=new Page<>(pageNum,pageSize);
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        Page<${entity}> page=new Page<>(pageNum,pageSize);
+        QueryWrapper<${entity}> queryWrapper=new QueryWrapper<>();
 
         return ${table.entityPath}Service.page(page);
         }
