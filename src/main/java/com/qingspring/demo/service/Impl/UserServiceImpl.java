@@ -38,6 +38,10 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
+
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public Boolean exp(HttpServletResponse response,List<User> userList) throws Exception {
 
@@ -99,6 +103,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new ServiceException(ResponseEnum.USER_EXISTS);
         }
         return true;
+    }
+
+    @Override
+    public String getCount() {
+        String c = userMapper.getCount();
+        return c;
     }
 
     private  User userInfo(UserDTO userDTO){

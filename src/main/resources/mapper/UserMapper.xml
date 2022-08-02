@@ -46,8 +46,11 @@
             id = #{id}
         </where>
     </update>
+    <select id="getCount" resultType="java.lang.String">
+        select count(id) from sys_user
+    </select>
 
-<!--    <delete id="deletUserById" parameterType="java.lang.Integer">-->
+<!--        <delete id="deletUserById" parameterType="java.lang.Integer">-->
 <!--        delete from sys_user where id = #{id}-->
 <!--    </delete>-->
 

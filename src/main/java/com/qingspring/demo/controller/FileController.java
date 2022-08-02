@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qingspring.demo.common.ResponseEnum;
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.exception.ServiceException;
+import com.qingspring.demo.utils.JWT.LoginToken;
 import com.qingspring.demo.utils.JWT.PassToken;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -30,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/file")
-
+@LoginToken
 public class FileController {
 
 

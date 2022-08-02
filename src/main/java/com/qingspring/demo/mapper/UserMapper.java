@@ -16,4 +16,5 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
 
+    String getCount();
 }

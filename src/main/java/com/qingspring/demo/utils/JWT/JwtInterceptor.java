@@ -50,9 +50,9 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
 
-    if (method.isAnnotationPresent(LoginToken.class)) {
-        LoginToken userLoginToken = method.getAnnotation(LoginToken.class);
-        if (userLoginToken.required()) {
+//    if (method.isAnnotationPresent(LoginToken.class)) {
+//        LoginToken userLoginToken = method.getAnnotation(LoginToken.class);
+//        if (userLoginToken.required()) {
 
             //执行认证
             if (StrUtil.isBlank(token)) {
@@ -81,10 +81,10 @@ public class JwtInterceptor implements HandlerInterceptor {
                 throw new ServiceException(ResponseEnum.TOKEN_FAIL);
             }
             return true;
-        }
-    }
+//        }
+//    }
 
-        return true;
+//        return true;
     }
 
 

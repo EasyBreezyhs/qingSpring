@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.entity.User;
 import com.qingspring.demo.service.IUserService;
+import com.qingspring.demo.utils.JWT.LoginToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/echarts")
+@LoginToken
 public class EchartsController {
 
     @Autowired
@@ -55,6 +57,11 @@ public class EchartsController {
         return Result.success(list1);
     }
 
+
+    @GetMapping("/count")
+    public Result getCount(){
+        return Result.success(userService.getCount());
+    }
 
 
 }

@@ -29,5 +29,7 @@ public interface IUserService extends IService<User> {
 
     Boolean register(UserDTO userDTO);
 
+    String getCount();
+
 //    UserDTO findUserByusername(String username);
 }
