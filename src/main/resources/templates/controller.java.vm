@@ -50,45 +50,49 @@ public class ${table.controllerName} {
 
     //新增与更新
     @PostMapping("/insert")
-    public Boolean insertOrUpdate(@RequestBody ${entity} ${table.entityPath}){
-        return ${table.entityPath}Service.saveOrUpdate(${table.entityPath});
+    public Result insertOrUpdate(@RequestBody ${entity} ${table.entityPath}){
+        return Result.success(${table.entityPath}Service.saveOrUpdate(${table.entityPath}));
         }
 
     //通过id删除
     @DeleteMapping("/del/{id}")
-    public Boolean delete(@PathVariable Integer id){
-        return ${table.entityPath}Service.removeById(id);
+    public Result delete(@PathVariable Integer id){
+        return Result.success(${table.entityPath}Service.removeById(id));
         }
 
     //批量删除
     @PostMapping("/del/Batch")
-    public Boolean deleteBatch(@RequestBody List<Integer> ids){
-        return ${table.entityPath}Service.removeBatchByIds(ids);
+    public Result deleteBatch(@RequestBody List<Integer> ids){
+        return Result.success(${table.entityPath}Service.removeBatchByIds(ids));
         }
 
     //查询所有
     @GetMapping
-    public List<${entity}> findAll(){
-        return ${table.entityPath}Service.list();
+    public Result findAll(){
+        return Result.success(${table.entityPath}Service.list());
         }
 
     //通过id查询
     @GetMapping("/{id}")
-    public List<${entity}> findOne(@PathVariable Integer id){
-        return ${table.entityPath}Service.list();
+    public Result findOne(@PathVariable Integer id){
+            return Result.success(${table.entityPath}Service.list());
         }
 
-     //分页
+    //分页
     @GetMapping("/page")
-    public Page<${entity}> findPage(@RequestParam Integer pageNum,
-                                    @RequestParam Integer pageSize){
+    public Result findPage(@RequestParam Integer pageNum,
+    @RequestParam Integer pageSize,
+    @RequestParam(defaultValue = "") String name){
 
         Page<${entity}> page=new Page<>(pageNum,pageSize);
         QueryWrapper<${entity}> queryWrapper=new QueryWrapper<>();
-
-        return ${table.entityPath}Service.page(page);
+        if (!"".equals(name)){
+        queryWrapper.like("username",name);
+        }
+        //queryWrapper.orderByDesc("id");
+        return Result.success(${table.entityPath}Service.page(page,queryWrapper));
         }
 
-}
+ }
 
 #end

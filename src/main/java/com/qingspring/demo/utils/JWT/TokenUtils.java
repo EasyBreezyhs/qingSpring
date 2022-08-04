@@ -30,7 +30,7 @@ import java.util.Objects;
 public class TokenUtils {
 
 //    过期时间
-    private static final long EXPIRE_TIME = 5*60*1000;
+    private static final long EXPIRE_TIME = 120*60*1000;
 
     public static String getToken(String userId,String sign){
         Date date =new Date(System.currentTimeMillis()+EXPIRE_TIME);

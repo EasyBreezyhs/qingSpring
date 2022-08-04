@@ -1,15 +1,10 @@
 package com.qingspring.demo.utils;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.baomidou.mybatisplus.generator.fill.Column;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * <h3>Qingdemo</h3>
@@ -18,7 +13,7 @@ import java.util.List;
  * @author : EasyBreezyhs
  * @date : 2022-07-07 19:02
  **/
-public class Generate {
+public class CodeGenerate {
 
 
     private static void gennerate(){
@@ -41,7 +36,8 @@ public class Generate {
                     builder.controllerBuilder().enableHyphenStyle()  // 开启驼峰转连字符
                             .enableRestStyle();  // 开启生成@RestController 控制器
 
-                    builder.addInclude("sys_file") // 设置需要生成的表名
+
+                    builder.addInclude("sys_role") // 设置需要生成的表名
                             .addTablePrefix("t_", "sys_"); // 设置过滤表前缀
 
                     builder.mapperBuilder().enableBaseResultMap();
@@ -52,10 +48,10 @@ public class Generate {
 
     }
 
-
+//
 //    public static void main(String[] args) {
 //        gennerate();
 //    }
-
+//
 
 }

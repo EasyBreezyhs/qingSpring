@@ -2,6 +2,7 @@ package com.qingspring.demo.utils.JWT;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWTException;
+import cn.hutool.jwt.JWTUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;

@@ -90,7 +90,7 @@ public class ${table.controllerName} {
         queryWrapper.like("username",name);
         }
         //queryWrapper.orderByDesc("id");
-        return ${table.entityPath}Service.page(page,name);
+        return ${table.entityPath}Service.page(page,queryWrapper);
         }
 
 }
