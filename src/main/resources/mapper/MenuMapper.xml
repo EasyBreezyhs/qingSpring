@@ -10,6 +10,26 @@
         <result column="icon" property="icon" />
         <result column="description" property="description" />
         <result column="pid" property="pid" />
+        <result column="page_path" property="pagePath" />
     </resultMap>
+    <select id="getMenuByMenuId" resultType="com.qingspring.demo.entity.Menu">
+        select id,name,path,icon,description,pid,page_path FROM sys_menu
+        WHERE id = #{menuId}
+    </select>
+
+    <select id="getParentMenuByMenuId" resultType="com.qingspring.demo.entity.Menu"
+            parameterType="java.lang.Integer">
+        select id,name,path,icon,description,pid,page_path FROM sys_menu as m
+            JOIN (SELECT pid as menuPid FROM sys_menu WHERE id = #{menuId}) as m1
+            ON  m.id = m1.menuPid
+    </select>
+
+    <select id="getChildCountById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(id) FROM sys_menu as m
+            JOIN (SELECT pid FROM sys_menu) as m1
+            ON m.id = m1.pid
+        WHERE m.id = #{menuId}
+    </select>
+
 
 </mapper>

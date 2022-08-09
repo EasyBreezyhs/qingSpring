@@ -54,7 +54,8 @@ public class User implements Serializable {
     private LocalDateTime createTime;
     @Alias("头像")
     private String avatarUrl;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+    @Alias("角色")
     private String role;
 
 

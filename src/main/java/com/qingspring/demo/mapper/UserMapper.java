@@ -2,6 +2,7 @@ package com.qingspring.demo.mapper;
 
 import com.qingspring.demo.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-
+//    用户总数
     String getCount();
+//    用户所拥有的菜单id
+    List<Integer> getMenuIdByUserId(@Param("userId") Integer userId);
+
 }

@@ -11,6 +11,6 @@ public interface RoleAndMenuMapper extends BaseMapper<RoleAndMenu> {
 
     List<Integer> getMenuIdByRoleId(@Param("roleId")Integer roleId);
 
-
     Boolean deleteByRoleId(@Param("roleId") Integer roleId);
+
 }

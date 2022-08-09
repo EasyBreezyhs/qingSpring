@@ -50,7 +50,17 @@
         select count(id) from sys_user
     </select>
 
-<!--        <delete id="deletUserById" parameterType="java.lang.Integer">-->
+
+    <select id="getMenuIdByUserId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT m.id AS menuId from sys_user as u
+        JOIN sys_role as r ON r.`name` = u.role
+        JOIN sys_role_menu as rm ON  r.id = rm.role_Id
+        JOIN sys_menu as m ON rm.menu_Id = m.id
+        WHERE u.id = #{userId}
+    </select>
+
+
+    <!--        <delete id="deletUserById" parameterType="java.lang.Integer">-->
 <!--        delete from sys_user where id = #{id}-->
 <!--    </delete>-->
 

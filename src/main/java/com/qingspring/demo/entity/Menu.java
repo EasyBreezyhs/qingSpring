@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.baomidou.mybatisplus.annotation.*;
@@ -51,10 +52,30 @@ public class Menu implements Serializable {
     @ApiModelProperty("父级菜单")
     private Integer pid;
 
+    private String pagePath;
+
+
     @TableField(exist = false)
     private List<Menu> children;
 
 
 
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.getId()+this.getName()+this.getPath()+this.getIcon());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Menu){
+            Menu m = (Menu) obj;
+            return (m.getId().equals(id)&&
+                    m.getName().equals(name)&&
+                    m.getPath().equals(path)&&
+                    m.getIcon().equals(icon)
+                    );
+        }
+        return super.equals(obj);
+    }
 }
