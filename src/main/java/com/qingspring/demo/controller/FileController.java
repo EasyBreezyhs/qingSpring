@@ -38,23 +38,19 @@ public class FileController {
     @Resource
     private IFileService fileService;
 
-
+    @PassToken
     @PostMapping("/upload")
-    private Result upload(@RequestParam MultipartFile file){
+    private Result upload(@RequestParam MultipartFile file) throws IOException {
 
-        String url = null;
-        try {
-            url = fileService.fileUpload(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ServiceException(ResponseEnum.ERROR);
-        }
+        String url;
+        url = fileService.fileUpload(file);
 
         return Result.success(url);
 
     }
 
 
+    @PassToken
     @GetMapping("/download/{fileUuid}")
     public Result download(@PathVariable String fileUuid, HttpServletResponse response){
         boolean downloadFlag = false;
@@ -66,9 +62,6 @@ public class FileController {
         }
         return Result.success(downloadFlag);
     }
-
-
-
 
 
     //查询所有

@@ -46,6 +46,11 @@
             id = #{id}
         </where>
     </update>
+    <update id="modifyPassword">
+        update sys_user set password = #{password} WHERE id = #{id}
+    </update>
+
+
     <select id="getCount" resultType="java.lang.String">
         select count(id) from sys_user
     </select>
@@ -57,6 +62,10 @@
         JOIN sys_role_menu as rm ON  r.id = rm.role_Id
         JOIN sys_menu as m ON rm.menu_Id = m.id
         WHERE u.id = #{userId}
+    </select>
+
+    <select id="getUserByname" resultType="com.qingspring.demo.entity.User" parameterType="java.lang.String">
+        SELECT * FROM sys_user WHERE username = #{username}
     </select>
 
 

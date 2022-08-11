@@ -66,7 +66,6 @@ public class MenuController {
     //查询所有
     //    父子级菜单
     @GetMapping
-    @PassToken
     public Result findAll(
     @RequestParam(defaultValue = "") String name){
 

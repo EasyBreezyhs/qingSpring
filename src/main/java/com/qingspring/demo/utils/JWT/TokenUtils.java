@@ -30,7 +30,8 @@ import java.util.Objects;
 public class TokenUtils {
 
 //    过期时间
-    private static final long EXPIRE_TIME = 120*60*1000;
+    private static final long EXPIRE_TIME = 30*60*1000;
+    private static final long REFEASH_TIME_PLUS = 60*60*1000;
 
     public static String getToken(String userId,String sign){
         Date date =new Date(System.currentTimeMillis()+EXPIRE_TIME);
@@ -39,6 +40,16 @@ public class TokenUtils {
                 .withExpiresAt(date)//5分钟后token过期
                 .sign(Algorithm.HMAC256(sign));//用sign作为密钥进行加密 一般传password
     }
+
+
+    public static String getRefreshToken(String userId,String sign){
+        Date date =new Date(System.currentTimeMillis()+EXPIRE_TIME+REFEASH_TIME_PLUS);
+
+        return JWT.create().withAudience(userId)   //将userId保存到token中
+                .withExpiresAt(date)//5分钟后token过期
+                .sign(Algorithm.HMAC256(sign));//用sign作为密钥进行加密 一般传password
+    }
+
 
     private static IUserService staticUserService;
     @Resource

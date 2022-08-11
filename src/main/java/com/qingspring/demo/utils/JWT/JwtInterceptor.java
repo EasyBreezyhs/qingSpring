@@ -3,10 +3,13 @@ package com.qingspring.demo.utils.JWT;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWTException;
 import cn.hutool.jwt.JWTUtil;
+import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.qingspring.demo.common.ResponseEnum;
+import com.qingspring.demo.common.Result;
 import com.qingspring.demo.entity.User;
 import com.qingspring.demo.exception.ServiceException;
 import com.qingspring.demo.service.IUserService;
@@ -14,10 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
@@ -33,7 +38,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     private IUserService userService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String token = request.getHeader("token");
         //如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)){
@@ -60,7 +65,8 @@ public class JwtInterceptor implements HandlerInterceptor {
                 throw new ServiceException(ResponseEnum.TOKEN_EXISTS);
             }
 
-            String userId;
+
+        String userId;
             try {
                 userId = JWT.decode(token).getAudience().get(0);
             } catch (JWTException je) {
@@ -73,14 +79,21 @@ public class JwtInterceptor implements HandlerInterceptor {
                 throw new ServiceException(ResponseEnum.TOKEN_USER_ERROE);
             }
 
+
             //最后进行用户密码加签验证 token
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
             try {
                 //验证token
                 jwtVerifier.verify(token);
-            } catch (JWTException je) {
-                throw new ServiceException(ResponseEnum.TOKEN_FAIL);
+
+            } catch (JWTVerificationException je) {
+                response.setContentType("text/json;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+                throw new ServiceException(ResponseEnum.TOKEN_EXPIRED);
             }
+
+
             return true;
 //        }
 //    }

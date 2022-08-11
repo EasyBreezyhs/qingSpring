@@ -2,6 +2,7 @@ package com.qingspring.demo.service;
 
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.controller.DTO.UserDTO;
+import com.qingspring.demo.controller.DTO.UserPasswordDTO;
 import com.qingspring.demo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.commons.math3.analysis.function.Exp;
@@ -27,9 +28,13 @@ public interface IUserService extends IService<User> {
 
     UserDTO login(UserDTO userDTO);
 
-    Boolean register(UserDTO userDTO);
+    UserDTO register(UserDTO userDTO);
 
     String getCount();
+
+    UserDTO getUserByname(String name);
+
+    boolean modifyPassword(UserPasswordDTO userPasswordDTO);
 
 //    UserDTO findUserByusername(String username);
 }

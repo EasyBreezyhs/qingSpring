@@ -46,5 +46,8 @@ public class UserDTO {
 //    携带token
     private String token;
 
+    //    携带token
+    private String refreshToken;
+
 
 }

@@ -21,4 +21,7 @@ public interface UserMapper extends BaseMapper<User> {
 //    用户所拥有的菜单id
     List<Integer> getMenuIdByUserId(@Param("userId") Integer userId);
 
+    User getUserByname(@Param("username") String name);
+
+    boolean modifyPassword(@Param("password") String newPassword,@Param("id") Integer id);
 }

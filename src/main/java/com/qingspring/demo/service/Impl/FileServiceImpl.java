@@ -11,7 +11,6 @@ import com.qingspring.demo.exception.ServiceException;
 import com.qingspring.demo.mapper.FileMapper;
 import com.qingspring.demo.service.IFileService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,10 +23,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -65,7 +61,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Filesdb> implements
         }
 
 //        判断文件是否存在 存在直接返回 该数据的url
-        Filesdb dbFile = getFileByMD5(md5);
+        Filesdb dbFile = getFileByMD5(md5,originalFilename);
         if (dbFile!=null){
             dbFile.setId(null);
             if (!dbFile.getName().equals(originalFilename)){
@@ -129,22 +125,22 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Filesdb> implements
 
     @Value("${server.port}")
     private int serverPort;
+    @Value("${server.address}")
+    private String serverAddress;
 
     private String getUrl() {
-        InetAddress address = null;
-        try {
-            address = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        assert address != null;
-        return "http://"+address.getHostAddress() +":"+this.serverPort;
+
+        String address = this.serverAddress;
+
+        return "http://"+address +":"+this.serverPort;
     }
 
 
-    private Filesdb getFileByMD5(String md5){
+    private Filesdb getFileByMD5(String md5,String originalFilename){
         QueryWrapper<Filesdb> queryWrapper = new QueryWrapper<Filesdb>();
-        queryWrapper.eq("md5",md5);
+        queryWrapper.eq("md5",md5).eq("name",originalFilename);
+
+
 
         return getOne(queryWrapper);
     }

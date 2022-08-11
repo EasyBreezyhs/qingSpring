@@ -1,5 +1,6 @@
 package com.qingspring.demo.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -21,13 +22,21 @@ public class CorsConfig {
     */
     private static final long MAX_AGE = 24 * 60 * 60;
 
+    @Value("${system-params.web.address}")
+    private String serverAddress;
+    @Value("${system-params.web.port}")
+    private String serverPort;
+
+
     @Bean
     public CorsFilter corsFilter(){
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        //1 设置访问资源地址
-        corsConfiguration.addAllowedOrigin("http://localhost:8080");
+//        "http://"+serverAddress+":"+serverPort
+
+        //1 设置访问资源地址 前端地址
+        corsConfiguration.addAllowedOrigin("http://"+this.serverAddress+":"+this.serverPort);
         //2 设置访问资源请求头
         corsConfiguration.addAllowedHeader("*");
         //3 设置访问资源请求方法
