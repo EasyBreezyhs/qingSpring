@@ -36,9 +36,7 @@ public class RoleAndMenuServiceImpl extends ServiceImpl<RoleAndMenuMapper, RoleA
     public Boolean saveMenuByRoleId(Integer roleId, List<Integer> menuId) {
 
 //        先删再增
-        if (!roleAndMenuMapper.deleteByRoleId(roleId)){
-            throw new ServiceException(ResponseEnum.ERROR);
-        }
+        roleAndMenuMapper.deleteByRoleId(roleId);
 
         for (Integer m : menuId) {
             RoleAndMenu roleAndMenu = new RoleAndMenu();

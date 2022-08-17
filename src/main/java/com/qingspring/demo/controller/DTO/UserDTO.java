@@ -20,6 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+
+    private Integer id;
     @Alias("用户姓名")
     private String username;
     @Alias("用户密码")

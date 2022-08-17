@@ -1,4 +1,4 @@
-package com.qingspring.demo.service.impl;
+package com.qingspring.demo.service.Impl;
 
 import com.qingspring.demo.entity.Role;
 import com.qingspring.demo.mapper.RoleMapper;

@@ -24,6 +24,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor())
                 .addPathPatterns("/**")         //拦截所有请求
                 .excludePathPatterns("/user/login","/user/register",
+                        "/**/*.html",
                         "/**/*.js",              //js静态资源
                         "/**/*.css",             //css静态资源
                         "/**/*.woff",
@@ -31,7 +32,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                         "/**/*.jpg",
                         "/**/*.png",
                         "/**/*.jepg",
-                        "/swagger-ui.html");
+                        "/swagger-ui/**",
+                        "/swagger-ui/index.html");
     }
 
     @Bean
@@ -47,13 +49,15 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //    @Value("${accessFile.location}")
 //    private String location; //上传文件保存的本地目录
 //
-        @Value("${files.upload.path}")
+        @Value("${files.upload.path:DefaultValue}")
         private String fileUploadPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //匹配到resourceHandler,将URL映射至location,也就是本地文件夹
         registry.addResourceHandler("/file/**").addResourceLocations("file:" + fileUploadPath);
+
+
     }
 
 

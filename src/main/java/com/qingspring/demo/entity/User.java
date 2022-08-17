@@ -2,10 +2,12 @@ package com.qingspring.demo.entity;
 
 import cn.hutool.core.annotation.Alias;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,6 +59,15 @@ public class User implements Serializable {
 
     @Alias("角色")
     private String role;
+
+    @Alias("教师课程")
+    @TableField(exist = false)
+    private List<Course> courseList;
+
+    @Alias("学生课程")
+    @TableField(exist = false)
+    private List<Course> stuCourses;
+
 
 
 }

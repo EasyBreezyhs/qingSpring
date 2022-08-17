@@ -22,9 +22,9 @@ public class CorsConfig {
     */
     private static final long MAX_AGE = 24 * 60 * 60;
 
-    @Value("${system-params.web.address}")
+    @Value("${system-params.web.address:DefaultValue}")
     private String serverAddress;
-    @Value("${system-params.web.port}")
+    @Value("${system-params.web.port:DefaultValue}")
     private String serverPort;
 
 
@@ -36,7 +36,8 @@ public class CorsConfig {
 //        "http://"+serverAddress+":"+serverPort
 
         //1 设置访问资源地址 前端地址
-        corsConfiguration.addAllowedOrigin("http://"+this.serverAddress+":"+this.serverPort);
+//        corsConfiguration.addAllowedOrigin("http://"+serverAddress+":"+serverPort);
+        corsConfiguration.addAllowedOrigin("*");
         //2 设置访问资源请求头
         corsConfiguration.addAllowedHeader("*");
         //3 设置访问资源请求方法

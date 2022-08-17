@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,30 +20,36 @@ import lombok.Setter;
  * </p>
  *
  * @author EasyBreezyhs
- * @since 2022-08-02
+ * @since 2022-08-15
  */
-@Getter
-@Setter
-@TableName("sys_role")
-@ApiModel(value = "Role对象", description = "")
-public class Role implements Serializable {
+@Data
+@TableName("sys_course")
+@ApiModel(value = "Course对象", description = "")
+public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("role表id")
+    @ApiModelProperty("课程id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty("角色名")
+    @ApiModelProperty("课程名称")
     private String name;
 
-    @ApiModelProperty("角色描述")
-    private String description;
+    @ApiModelProperty("课程学分")
+    private Integer score;
 
-    @ApiModelProperty("唯一标识")
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String flag;
+    @ApiModelProperty("上课时间")
+    private String times;
 
+    @ApiModelProperty("是否开课")
+    private Boolean state;
+
+    @ApiModelProperty("上课教师id")
+    private Integer teacherId;
+
+    @TableField(exist = false)
+    private String teacherName;
 
 
 

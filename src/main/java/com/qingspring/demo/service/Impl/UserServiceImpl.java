@@ -5,10 +5,12 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qingspring.demo.common.ResponseEnum;
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.controller.DTO.UserDTO;
 import com.qingspring.demo.controller.DTO.UserPasswordDTO;
+import com.qingspring.demo.entity.Course;
 import com.qingspring.demo.entity.Menu;
 import com.qingspring.demo.entity.User;
 import com.qingspring.demo.exception.ServiceException;
@@ -17,8 +19,6 @@ import com.qingspring.demo.mapper.UserMapper;
 import com.qingspring.demo.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qingspring.demo.utils.JWT.TokenUtils;
-import com.sun.xml.internal.ws.api.model.ExceptionType;
-import net.sf.jsqlparser.expression.TryCastExpression;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -199,6 +199,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 
         return userMapper.modifyPassword(userPasswordDTO.getNewPassword(),one.getId());
+    }
+
+    @Override
+    public Page<Course> findPage(Page<Course> page, String username, String email, String address) {
+        return userMapper.findPage(page,username,email,address);
     }
 
 

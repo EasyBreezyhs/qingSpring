@@ -1,7 +1,10 @@
 package com.qingspring.demo.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qingspring.demo.entity.Course;
 import com.qingspring.demo.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
  * @author EasyBreezyhs
  * @since 2022-07-07
  */
+
 public interface UserMapper extends BaseMapper<User> {
 
 //    用户总数
@@ -24,4 +28,6 @@ public interface UserMapper extends BaseMapper<User> {
     User getUserByname(@Param("username") String name);
 
     boolean modifyPassword(@Param("password") String newPassword,@Param("id") Integer id);
+
+    Page<Course> findPage(Page<Course> page, String username, String email, String address);
 }

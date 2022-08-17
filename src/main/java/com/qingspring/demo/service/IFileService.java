@@ -2,11 +2,13 @@ package com.qingspring.demo.service;
 
 import com.qingspring.demo.entity.Filesdb;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qingspring.demo.entity.Vo.FilesdbVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * <p>
@@ -22,4 +24,5 @@ public interface IFileService extends IService<Filesdb> {
 
     Boolean download(String fileUuid, HttpServletResponse response) throws IOException;
 
+    List<FilesdbVo> findAllInFront();
 }

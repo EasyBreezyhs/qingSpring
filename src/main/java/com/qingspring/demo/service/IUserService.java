@@ -1,8 +1,10 @@
 package com.qingspring.demo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.controller.DTO.UserDTO;
 import com.qingspring.demo.controller.DTO.UserPasswordDTO;
+import com.qingspring.demo.entity.Course;
 import com.qingspring.demo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.commons.math3.analysis.function.Exp;
@@ -35,6 +37,8 @@ public interface IUserService extends IService<User> {
     UserDTO getUserByname(String name);
 
     boolean modifyPassword(UserPasswordDTO userPasswordDTO);
+
+    Page<Course> findPage(Page<Course> page, String username, String email, String address);
 
 //    UserDTO findUserByusername(String username);
 }

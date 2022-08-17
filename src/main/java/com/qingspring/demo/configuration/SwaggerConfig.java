@@ -27,7 +27,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .enable(true)
-                .groupName("Ez")
+                .groupName("Ez标准接口")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.qingspring.demo.controller"))
                 .paths(PathSelectors.any())
@@ -39,7 +39,7 @@ public class SwaggerConfig {
                 "Ez's api",
                 "redis project",
                 "v1.0",
-                "2261839618@qq.com", //开发者团队的邮箱
+                "h3323393688@qq.com", //开发者团队的邮箱
                 "Ez",
                 "Apache 2.0",  //许可证
                 "http://www.apache.org/licenses/LICENSE-2.0" //许可证链接

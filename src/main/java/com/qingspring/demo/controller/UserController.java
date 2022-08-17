@@ -10,6 +10,7 @@ import com.qingspring.demo.common.ResponseEnum;
 import com.qingspring.demo.common.Result;
 import com.qingspring.demo.controller.DTO.UserDTO;
 import com.qingspring.demo.controller.DTO.UserPasswordDTO;
+import com.qingspring.demo.entity.Course;
 import com.qingspring.demo.utils.JWT.LoginToken;
 import com.qingspring.demo.utils.JWT.PassToken;
 import com.qingspring.demo.utils.JWT.TokenUtils;
@@ -89,19 +90,23 @@ public class UserController {
                            @RequestParam(defaultValue = "") String email,
                            @RequestParam(defaultValue = "") String address){
 
-        Page<User> page=new Page<>(pageNum,pageSize);
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
-        if (!"".equals(username)){
-            queryWrapper.like("username",username);
-        }
-        if (!"".equals(email)){
-            queryWrapper.like("email",email);
-        }
-        if (!"".equals(address)){
-            queryWrapper.like("address",address);
-        }
-        queryWrapper.orderByDesc("id");
-        return Result.success(userService.page(page,queryWrapper));
+//        Page<User> page=new Page<>(pageNum,pageSize);
+//        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+//        if (!"".equals(username)){
+//            queryWrapper.like("username",username);
+//        }
+//        if (!"".equals(email)){
+//            queryWrapper.like("email",email);
+//        }
+//        if (!"".equals(address)){
+//            queryWrapper.like("address",address);
+//        }
+//        queryWrapper.orderByDesc("id");
+//        return Result.success(userService.page(page,queryWrapper));
+
+        Page<Course> page = userService.findPage(new Page<Course>(pageNum,pageSize),username,email,address);
+
+        return  Result.success(page);
         }
 
     @GetMapping("/export")

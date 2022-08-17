@@ -17,7 +17,7 @@ public class CodeGenerate {
 
 
     private static void gennerate(){
-        FastAutoGenerator.create("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false", "root", "root")
+        FastAutoGenerator.create("jdbc:mysql://114.132.161.177:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false", "root", "hhs2022")
                 .globalConfig(builder -> {
                     builder.author("EasyBreezyhs") // 设置作者
                             .enableSwagger() // 开启 swagger 模式
@@ -37,7 +37,7 @@ public class CodeGenerate {
                             .enableRestStyle();  // 开启生成@RestController 控制器
 
 
-                    builder.addInclude("sys_role") // 设置需要生成的表名
+                    builder.addInclude("sys_course") // 设置需要生成的表名
                             .addTablePrefix("t_", "sys_"); // 设置过滤表前缀
 
                     builder.mapperBuilder().enableBaseResultMap();
@@ -48,10 +48,10 @@ public class CodeGenerate {
 
     }
 
-//
+
 //    public static void main(String[] args) {
 //        gennerate();
 //    }
-//
+
 
 }

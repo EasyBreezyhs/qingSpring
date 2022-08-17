@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingspring.demo.mapper.CourseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qingspring.demo.entity.Course">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="score" property="score" />
+        <result column="times" property="times" />
+        <result column="state" property="state" />
+        <result column="teacher_id" property="teacherId" />
+    </resultMap>
+
+
+    <select id="findPage" resultType="com.qingspring.demo.entity.Course">
+        SELECT sys_course.*,sys_user.nickname as teachername FROM `sys_course`
+        LEFT JOIN sys_user
+        ON sys_user.id = sys_course.teacher_id
+        <where>
+            <if test="name != null and name != ''">
+                and sys_course.name like concat("%",#{name },"%")
+            </if>
+        </where>
+
+    </select>
+
+    <delete id="delStuById" parameterType="java.lang.Integer">
+        delete from sys_student_course where student_id = #{userId} and course_id = #{courseId}
+    </delete>
+
+    <insert id="addCourseById">
+        insert into sys_student_course(student_id,course_id)
+        values (#{userId},#{courseId})
+    </insert>
+
+
+</mapper>

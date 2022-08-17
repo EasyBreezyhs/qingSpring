@@ -1,21 +1,30 @@
 package com.qingspring.demo.service.Impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.qingspring.demo.common.RedisKeyEnum;
 import com.qingspring.demo.common.ResponseEnum;
 import com.qingspring.demo.entity.Filesdb;
+import com.qingspring.demo.entity.Vo.FilesdbVo;
 import com.qingspring.demo.exception.ServiceException;
 import com.qingspring.demo.mapper.FileMapper;
 import com.qingspring.demo.service.IFileService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qingspring.demo.service.RedisService;
+import com.qingspring.demo.utils.mapstruct.FilesMapping;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -24,6 +33,7 @@ import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -39,8 +49,11 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Filesdb> implements
     @Autowired
     private FileMapper fileMapper;
 
-    @Value("${files.upload.path}")
+    @Value("${files.upload.path:DefaultValue}")
     private String fileUploadPath;
+
+    @Resource
+    private RedisService redisService;
 
 
     @Override
@@ -123,9 +136,30 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Filesdb> implements
         return true;
     }
 
-    @Value("${server.port}")
-    private int serverPort;
-    @Value("${server.address}")
+    @Override
+    public List<FilesdbVo> findAllInFront() {
+
+        //        1、从缓存中获取数据
+        String jsonStr = redisService.getString(RedisKeyEnum.FILES_KEY.getKey());
+        List<FilesdbVo> filesdbVos;
+        if (StrUtil.isBlank(jsonStr)){
+            List<Filesdb> filesdbList = fileMapper.selectList(null);
+//            转换成Vo类
+            filesdbVos= FilesMapping.INSTANCE.filesdbToVoList(filesdbList);
+//            缓存到redis
+            redisService.setString(RedisKeyEnum.FILES_KEY.getKey(), JSONUtil.toJsonStr(filesdbVos));
+        }else{
+//            有则在redis中取数据
+           filesdbVos = JSONUtil.toBean(jsonStr, new TypeReference<List<FilesdbVo>>() {
+           },true);
+        }
+
+        return filesdbVos;
+    }
+
+    @Value("${server.port:DefaultValue}")
+    private String serverPort;
+    @Value("${system-params.web.address:DefaultValue}")
     private String serverAddress;
 
     private String getUrl() {

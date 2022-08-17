@@ -1,10 +1,14 @@
 package com.qingspring.demo.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.qingspring.demo.common.RedisKeyEnum;
 import com.qingspring.demo.common.ResponseEnum;
 import com.qingspring.demo.common.Result;
+import com.qingspring.demo.entity.Vo.FilesdbVo;
 import com.qingspring.demo.exception.ServiceException;
+import com.qingspring.demo.service.RedisService;
 import com.qingspring.demo.utils.JWT.LoginToken;
 import com.qingspring.demo.utils.JWT.PassToken;
 import org.springframework.web.bind.annotation.*;
@@ -70,15 +74,6 @@ public class FileController {
         return Result.success(fileService.list());
     }
 
-//    通过id查询
-//    @GetMapping("/{fileUnid}")
-//    public String findOne(@PathVariable String fileUnid){
-//        QueryWrapper<Filesdb> fq = new QueryWrapper<>();
-//        fq.eq("uuid",fileUnid);
-//        Filesdb one = fileService.getOne(fq);
-//
-//        return one.getUrl();
-//    }
 
 //    @PostMapping("/update")
 //    public Result update(@RequestBody Filesdb files) {
@@ -129,9 +124,21 @@ public class FileController {
         return Result.success(fileService.page(page,queryWrapper));
     }
 
+    @PostMapping("/update")
+    public Result updateState(@RequestBody Filesdb filesdb){
+        fileService.updateById(filesdb);
+        return Result.success();
+    }
 
 
+    @PassToken
+    @GetMapping("/front/all")
+    public Result findAllInFront(){
 
+        List<FilesdbVo> filesdbList = fileService.findAllInFront();
+
+        return Result.success(filesdbList);
+    }
 
 
 }
