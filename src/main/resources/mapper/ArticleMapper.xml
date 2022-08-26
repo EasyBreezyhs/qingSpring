@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingspring.demo.mapper.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qingspring.demo.entity.Article">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="content" property="content" />
+        <result column="likes" property="likes" />
+        <result column="title" property="title" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+    <select id="findMapper" resultType="com.qingspring.demo.entity.Article">
+        SELECT
+        t.*,
+        u.nickname AS articleName
+        FROM
+        `t_article` AS t
+        JOIN sys_user AS u ON u.id = t.user_id
+        <where>
+            <if test="title!=null and title!='' ">
+                and t.title like concat("%",#{title},"%")
+            </if>
+            <if test="articleName!=null and articleName != ''">
+                and u.nickname like concat("%",#{articleName},"%")
+            </if>
+        </where>
+        ORDER BY t.id DESC
+    </select>
+
+    <select id="findArticleDetailById" resultType="com.qingspring.demo.entity.Vo.ArticleDetailVo"
+            parameterType="java.lang.Integer">
+        SELECT
+            t.*,
+            us.nickname AS articleName,
+            us.url AS userAvatar,
+            us.Count AS atricleCount,
+            us.likeCount AS likeCount
+        FROM
+            `t_article` AS t
+                JOIN (
+                SELECT
+                    u.id AS id,
+                    u.nickname AS nickname,
+                    u.avatar_url AS url,
+                    SUM( t1.`likes` ) AS likeCount,
+                    COUNT( t1.id ) AS Count
+                FROM
+                    sys_user AS u
+                    JOIN t_article AS t1 ON u.id = t1.user_id
+                GROUP BY
+                    u.id
+            ) AS us ON t.user_id = us.id
+        WHERE
+            t.id = #{id}
+
+
+    </select>
+
+</mapper>

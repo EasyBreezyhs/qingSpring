@@ -81,6 +81,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Filesdb> implements
                 dbFile.setName(originalFilename);
                 fileMapper.insert(dbFile);
             }
+
             return dbFile.getUrl();
         }
 //    疑问 是否判断 数据库中没有 而磁盘有的情况
@@ -116,6 +117,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, Filesdb> implements
         saveFilesdb.setMd5(md5);
 
         fileMapper.insert(saveFilesdb);
+        redisService.del(RedisKeyEnum.FILES_KEY.getKey());
 
         return url;
     }

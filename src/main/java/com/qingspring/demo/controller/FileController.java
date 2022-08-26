@@ -42,6 +42,10 @@ public class FileController {
     @Resource
     private IFileService fileService;
 
+    @Resource
+    private RedisService redisService;
+
+
     @PassToken
     @PostMapping("/upload")
     private Result upload(@RequestParam MultipartFile file) throws IOException {
@@ -91,6 +95,7 @@ public class FileController {
         Filesdb filesdb = fileService.getBaseMapper().selectById(id);
         filesdb.setIsDelete(true);
         fileService.getBaseMapper().updateById(filesdb);
+        redisService.del(RedisKeyEnum.FILES_KEY.getKey());
         return Result.success();
         }
 
@@ -104,6 +109,7 @@ public class FileController {
             filesdb.setIsDelete(true);
             fileService.getBaseMapper().updateById(filesdb);
         }
+        redisService.del(RedisKeyEnum.FILES_KEY.getKey());
         return Result.success();
     }
 
@@ -127,6 +133,7 @@ public class FileController {
     @PostMapping("/update")
     public Result updateState(@RequestBody Filesdb filesdb){
         fileService.updateById(filesdb);
+        redisService.del(RedisKeyEnum.FILES_KEY.getKey());
         return Result.success();
     }
 

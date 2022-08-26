@@ -1,5 +1,9 @@
 package com.qingspring.demo.service.Impl;
 
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.json.JSONUtil;
+import com.qingspring.demo.common.RedisKeyEnum;
+import com.qingspring.demo.entity.Vo.FilesdbVo;
 import com.qingspring.demo.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -7,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -51,5 +56,14 @@ public class RedisImpl implements RedisService {
     public boolean del(String key) {
 
         return Boolean.TRUE.equals(redisTemplate.delete(key));
+    }
+
+    @Override
+    public <V> void addString(String key, V value) {
+        String jsonStr = getString(key);
+        List<V> list = JSONUtil.toBean(jsonStr, new TypeReference<List<V>>() {
+        },true);
+        list.add(value);
+        stringRedisTemplate.opsForValue().set(key,JSONUtil.toJsonStr(list));
     }
 }

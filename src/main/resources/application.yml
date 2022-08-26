@@ -39,8 +39,8 @@ mybatis-plus:
 
 files:
   upload:
-#    path: /home/Project/files/images/
-    path: D:/Tools/Project/Image/
+    path: /home/Project/files/images/
+#    path: D:/Tools/Project/Image/
 
 system-params:
   web:

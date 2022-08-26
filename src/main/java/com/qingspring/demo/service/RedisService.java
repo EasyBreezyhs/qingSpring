@@ -14,4 +14,7 @@ public interface RedisService {
 //    清空删除key
     boolean del(String key);
 
+    <V> void addString(String key,V value);
+
+
 }

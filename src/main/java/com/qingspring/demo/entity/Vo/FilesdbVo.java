@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FilesdbVo {
 
+    @ApiModelProperty("文件Id")
+    private Integer id;
+
     @ApiModelProperty("文件名称")
     private String name;
 
