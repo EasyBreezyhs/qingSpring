@@ -10,7 +10,7 @@ spring:
     name: qingSpring
   data:
     mongodb:
-      uri: mongodb://qing:123456@114.132.161.177:27017/qing
+      uri: mongodb://localhost:27017/
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
