@@ -1,5 +1,7 @@
 package com.qingspring.demo.common;
 
+import com.qingspring.demo.entity.Comments;
+
 /**
 * @author : EasyBreezyhs
 * @date : 2022/07/16-9:34
@@ -31,6 +33,11 @@ public enum ResponseEnum {
     UPLOAD_FAIL("334","上传失败，重新上传"),
     FILE_EXCEED("334","文件过大，请选择不大于6mb的文件"),
     FILE_ISPIC("334","不是所支持的图片类型，请重新上传"),
+
+
+    COMMENT_NOT_EXISRT("510","评论不存在"),
+    COMMENT_DELETE("511","无法删除评论"),
+    COMMENT_THUMUP("512","点赞成功"),
 
 
     EMAIL_ERROR("301","邮箱格式错误"),

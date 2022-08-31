@@ -6,6 +6,11 @@ server:
   #address: 127.0.0.1
 
 spring:
+  application:
+    name: qingSpring
+  data:
+    mongodb:
+      uri: mongodb://qing:123456@114.132.161.177:27017/qing
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -25,10 +30,13 @@ spring:
         max-wait: -1ms
         min-idle: 0
 
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
-  servlet:
-    multipart:
-      max-file-size: 5MB
+servlet:
+  multipart:
+    max-file-size: 5MB
 
 mybatis-plus:
   typeAliasesPackage: com.qingspring.demo.entity
@@ -49,6 +57,32 @@ system-params:
     port: 8080
 #    port: 9002
 
+
+cosid:
+  namespace: ${spring.application.name}
+  machine:
+    enabled: true
+    clock-backwards:
+      spin-threshold: 10
+      broken-threshold: 2000
+      #      stable: true
+      #      machine-bit: 10
+      #      instance-id: ${HOSTNAME}
+    distributor:
+      type: redis
+    #        manual:
+    #          machine-id: 0
+    state-storage:
+      local:
+        state-location: ./cosid-machine-state/
+    guarder:
+      enabled: true
+  snowflake:
+    enabled: true
+    #    epoch: 1577203200000
+    share:
+      clock-sync: true
+      friendly: true
 
 #accessFile:
 #  resourceHandler: /file/** #匹配需要拦截的URL
